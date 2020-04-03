@@ -7,5 +7,11 @@ namespace BookListMVC.Models
 {
     public class ApplicationDBContext
     {
+        public ApplicationDBContext(DBContextOptions<ApplicationDBContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Book> Books { get; set; }
     }
 }
