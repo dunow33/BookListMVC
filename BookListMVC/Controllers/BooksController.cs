@@ -12,6 +12,9 @@ namespace BookListMVC.Controllers
     {
         private readonly ApplicationDbContext _db;
 
+        [BindProperty]
+        public Book Book { get; set; }
+
         public BooksController(ApplicationDbContext db)
         {
             _db = db;
@@ -20,6 +23,26 @@ namespace BookListMVC.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Book Book)
+        {
+            if(ModelState.IsValid)
+            {
+                if(Book.Id == 0)
+                {
+                    _db.Books.Add(Book);
+                }
+                else
+                {
+                    _db.Books.Update(Book);
+                }
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(Book);
         }
 
         #region API Calls
