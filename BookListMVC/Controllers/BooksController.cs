@@ -23,6 +23,7 @@ namespace BookListMVC.Controllers
         }
 
         #region API Calls
+        #endregion
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
